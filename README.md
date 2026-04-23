@@ -75,6 +75,27 @@ API runs at `http://127.0.0.1:8000`.
 
 Frontend runs at `http://localhost:3000`.
 
+## Docker Setup
+
+1. Make sure Docker Desktop is running.
+2. Create `backend/.env` with:
+   ```env
+   GROQ_API_KEY=your_api_key_here
+   ```
+3. From the project root, build and start both services:
+   ```bash
+   docker compose up --build
+   ```
+4. Open:
+   - Frontend: `http://localhost:3000`
+   - Backend health: `http://localhost:8000/health`
+
+To stop containers:
+
+```bash
+docker compose down
+```
+
 ## API Endpoint
 
 ### `POST /extract`
