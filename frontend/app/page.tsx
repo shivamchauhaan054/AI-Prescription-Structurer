@@ -1,116 +1,59 @@
 "use client";
 
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-
-import LoadingSpinner from "@/app/components/LoadingSpinner";
-import PrescriptionInput from "@/app/components/PrescriptionInput";
-import { extractPrescription } from "@/app/lib/api";
 
 export default function Home() {
   const router = useRouter();
-  const [inputText, setInputText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async () => {
-    if (!inputText.trim()) {
-      setError("Please enter prescription text before extracting.");
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await extractPrescription({ text: inputText });
-      sessionStorage.setItem("structuredPrescriptionResult", JSON.stringify(response));
-      setInputText("");
-      router.push("/result");
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const detail =
-          typeof err.response?.data?.detail === "string"
-            ? err.response.data.detail
-            : null;
-        setError(detail ?? "Failed to extract prescription data. Please try again.");
-      } else {
-        setError("Unexpected error occurred. Please try again.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleClear = () => {
-    setInputText("");
-    setError(null);
-    sessionStorage.removeItem("structuredPrescriptionResult");
-  };
-
-  const scrollToWorkspace = () => {
-    const workspace = document.getElementById("workspace");
-    if (!workspace) return;
-    workspace.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 px-4 py-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.25),_transparent_45%),radial-gradient(circle_at_80%_20%,_rgba(16,185,129,0.2),_transparent_35%)]" />
-      <div className="pointer-events-none absolute -left-24 top-24 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl animate-float" />
-      <div className="pointer-events-none absolute -right-24 bottom-20 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl animate-float-delayed" />
+    <div className="relative min-h-screen overflow-hidden bg-[#020617] px-4 py-6 md:py-8">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#020617_0%,#040a1f_46%,#050f2b_100%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(99,102,241,0.08)_1px,transparent_1px)] [background-size:100%_44px]" />
+      <div className="pointer-events-none absolute inset-0 opacity-25 [background-image:linear-gradient(90deg,rgba(59,130,246,0.08)_1px,transparent_1px)] [background-size:72px_100%]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,0.18),transparent_62%)]" />
 
-      <main className="relative mx-auto w-full max-w-6xl space-y-6">
-        <header className="animate-fade-up-delayed rounded-3xl border border-white/10 bg-white/5 p-7 backdrop-blur-xl md:p-9">
-          <div className="space-y-4">
-            <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
-              Prescription Text Analyzer
-            </h1>
-            <p className="max-w-3xl text-sm text-slate-300 md:text-base">
-              Upload raw prescription text, extract structured clinical fields,
-              and review clean output in an app-style workflow.
-            </p>
-            <div className="flex flex-wrap gap-3">
+      <main className="relative mx-auto flex w-full max-w-7xl">
+        <header className="animate-fade-up-delayed flex min-h-[calc(100vh-4rem)] w-full flex-col overflow-hidden rounded-3xl border border-indigo-300/20 bg-[linear-gradient(180deg,rgba(2,6,23,0.98)_0%,rgba(3,8,28,0.95)_45%,rgba(4,13,35,0.95)_100%)] shadow-2xl shadow-indigo-950/40 backdrop-blur-xl">
+          <div className="flex items-center justify-between border-b border-indigo-300/15 px-5 py-4 md:px-10">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-semibold tracking-tight text-slate-100">
+                Prescription Structurer
+              </span>
+              <span className="rounded-md bg-violet-500/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-violet-200">
+                AI
+              </span>
+            </div>
+            <span className="rounded-lg border border-indigo-300/20 bg-slate-900/70 px-3 py-1.5 text-xs text-slate-300">
+              FastAPI + Next.js
+            </span>
+          </div>
+
+          <div className="relative flex flex-1 items-center justify-center px-5 py-12 text-center md:px-10 md:py-20">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_50%_0%,rgba(129,140,248,0.24),transparent_46%)]" />
+            <div className="relative mx-auto max-w-4xl space-y-5">
+              <p className="mx-auto w-fit rounded-full border border-violet-300/25 bg-violet-500/10 px-3 py-1 text-xs font-medium tracking-wide text-violet-100">
+                Structured Clinical Extraction
+              </p>
+              <h1 className="text-5xl font-bold leading-tight tracking-tight text-white md:text-7xl">
+                Prescription Text{" "}
+                <span className="bg-gradient-to-r from-violet-300 to-cyan-300 bg-clip-text text-transparent">
+                  Analyzer
+                </span>
+              </h1>
+              <p className="mx-auto max-w-3xl text-base text-slate-300 md:text-2xl">
+                Convert unstructured doctor notes into validated, clean JSON
+                output for clinical fields.
+              </p>
               <button
                 type="button"
-                onClick={scrollToWorkspace}
-                className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:from-blue-700 hover:to-cyan-600"
+                onClick={() => router.push("/workspace")}
+                className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-violet-900/40 transition hover:from-violet-500 hover:to-fuchsia-400"
               >
-                Open Analyzer
+                Open Workspace
               </button>
             </div>
           </div>
         </header>
-
-        <section id="workspace" className="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl md:p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-white">Analyzer Workspace</h2>
-              <p className="text-sm text-slate-300">
-                Enter text, run extraction, and view structured result.
-              </p>
-            </div>
-          </div>
-
-          {!isLoading && (
-            <PrescriptionInput
-              value={inputText}
-              isLoading={isLoading}
-              onChange={setInputText}
-              onSubmit={handleSubmit}
-              onClear={handleClear}
-            />
-          )}
-
-          {isLoading && <LoadingSpinner />}
-
-          {error && (
-            <div className="rounded-xl border border-red-300/50 bg-red-500/10 p-4 text-sm text-red-100 backdrop-blur">
-              {error}
-            </div>
-          )}
-        </section>
       </main>
     </div>
   );
