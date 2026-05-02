@@ -43,12 +43,21 @@ export default function Home() {
                 Convert unstructured doctor notes into validated, clean JSON
                 output for clinical fields.
               </p>
-              <Link
-                href="/workspace"
-                className="inline-block rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-violet-900/40 transition hover:from-violet-500 hover:to-fuchsia-400"
-              >
-                Open Workspace
-              </Link>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <Link
+                  href="/workspace"
+                  className="inline-block rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-violet-900/40 transition hover:from-violet-500 hover:to-fuchsia-400"
+                >
+                  Open Workspace
+                </Link>
+                <Link
+                  href="/dashboard"
+                  className="inline-block rounded-xl border border-violet-500/30 bg-violet-500/10 px-6 py-3 text-sm font-semibold text-violet-200 transition hover:bg-violet-500/20"
+                >
+                  View Analytics
+                </Link>
+              </div>
+
             </div>
           </div>
         </header>

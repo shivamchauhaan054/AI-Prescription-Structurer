@@ -32,12 +32,19 @@ class Vitals(BaseModel):
     weight: Optional[str] = None
 
 
+class InteractionWarning(BaseModel):
+    drugs: List[str] = Field(default_factory=list)
+    description: str
+    severity: str
+
+
 class ExtractResponse(BaseModel):
     patient_info: PatientInfo = Field(default_factory=PatientInfo)
     vitals: Vitals = Field(default_factory=Vitals)
     chief_complaints: List[str] = Field(default_factory=list)
     diagnosis: List[str] = Field(default_factory=list)
     medications: List[Medication] = Field(default_factory=list)
+    interactions: List[InteractionWarning] = Field(default_factory=list)
     lab_tests: List[str] = Field(default_factory=list)
     radiology_tests: List[str] = Field(default_factory=list)
     advice: List[str] = Field(default_factory=list)

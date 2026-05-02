@@ -138,6 +138,36 @@ export default function ExtractedResults({
         </div>
       </div>
 
+      {/* Drug Interactions */}
+      {editableData.interactions && editableData.interactions.length > 0 && (
+        <div className="rounded-3xl border border-rose-500/30 bg-rose-500/10 p-6 backdrop-blur-md">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 text-rose-400">
+              <AlertCircle size={20} />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-white">Adverse Drug Interactions Detected</h3>
+              <p className="text-xs text-rose-300/70">Powered by NIH RxNav</p>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {editableData.interactions.map((interaction, idx) => (
+              <div key={idx} className="flex flex-col gap-2 rounded-xl border border-rose-500/20 bg-rose-500/5 p-4">
+                <div className="flex items-center gap-2">
+                  <span className="rounded-md bg-rose-500/20 px-2 py-1 text-xs font-bold text-rose-300">
+                    {interaction.severity}
+                  </span>
+                  <span className="text-sm font-semibold text-rose-200">
+                    {interaction.drugs.join(" ↔ ")}
+                  </span>
+                </div>
+                <p className="text-sm text-slate-300">{interaction.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Medications (Full Width) */}
       <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
         <div className="mb-6 flex items-center justify-between">

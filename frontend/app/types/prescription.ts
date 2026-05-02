@@ -20,12 +20,19 @@ export type Vitals = {
   weight: string | null;
 };
 
+export type InteractionWarning = {
+  drugs: string[];
+  description: string;
+  severity: string;
+};
+
 export type ExtractResponse = {
   patient_info: PatientInfo;
   vitals: Vitals;
   chief_complaints: string[];
   diagnosis: string[];
   medications: Medication[];
+  interactions: InteractionWarning[];
   lab_tests: string[];
   radiology_tests: string[];
   advice: string[];

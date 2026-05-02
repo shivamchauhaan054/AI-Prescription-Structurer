@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import LoadingSpinner from "@/app/components/LoadingSpinner";
 import PrescriptionInput from "@/app/components/PrescriptionInput";
+import { saveToHistory } from "@/app/lib/analyticsUtils";
 import { extractPrescription } from "@/app/lib/api";
 
 export default function WorkspacePage() {
@@ -28,6 +29,10 @@ export default function WorkspacePage() {
       const response = await extractPrescription({ text: inputText });
       sessionStorage.setItem("structuredPrescriptionResult", JSON.stringify(response));
       sessionStorage.setItem("originalPrescriptionText", inputText);
+      
+      // Save to long-term analytics history
+      saveToHistory(response);
+      
       setInputText("");
       router.push("/result");
     } catch (err) {
