@@ -7,7 +7,22 @@ export type Medication = {
   evidence: string | null;
 };
 
+export type PatientInfo = {
+  name: string | null;
+  age: string | null;
+  gender: string | null;
+};
+
+export type Vitals = {
+  bp: string | null;
+  pulse: string | null;
+  temperature: string | null;
+  weight: string | null;
+};
+
 export type ExtractResponse = {
+  patient_info: PatientInfo;
+  vitals: Vitals;
   chief_complaints: string[];
   diagnosis: string[];
   medications: Medication[];

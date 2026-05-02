@@ -1,9 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#020617] px-4 py-6 md:py-8">
@@ -44,13 +43,12 @@ export default function Home() {
                 Convert unstructured doctor notes into validated, clean JSON
                 output for clinical fields.
               </p>
-              <button
-                type="button"
-                onClick={() => router.push("/workspace")}
-                className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-violet-900/40 transition hover:from-violet-500 hover:to-fuchsia-400"
+              <Link
+                href="/workspace"
+                className="inline-block rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-violet-900/40 transition hover:from-violet-500 hover:to-fuchsia-400"
               >
                 Open Workspace
-              </button>
+              </Link>
             </div>
           </div>
         </header>

@@ -27,6 +27,7 @@ export default function WorkspacePage() {
     try {
       const response = await extractPrescription({ text: inputText });
       sessionStorage.setItem("structuredPrescriptionResult", JSON.stringify(response));
+      sessionStorage.setItem("originalPrescriptionText", inputText);
       setInputText("");
       router.push("/result");
     } catch (err) {
@@ -74,17 +75,13 @@ export default function WorkspacePage() {
             </Link>
           </div>
 
-          {!isLoading && (
-            <PrescriptionInput
-              value={inputText}
-              isLoading={isLoading}
-              onChange={setInputText}
-              onSubmit={handleSubmit}
-              onClear={handleClear}
-            />
-          )}
-
-          {isLoading && <LoadingSpinner />}
+          <PrescriptionInput
+            value={inputText}
+            isLoading={isLoading}
+            onChange={setInputText}
+            onSubmit={handleSubmit}
+            onClear={handleClear}
+          />
 
           {error && (
             <div className="rounded-xl border border-red-300/50 bg-red-500/10 p-4 text-sm text-red-100 backdrop-blur">
